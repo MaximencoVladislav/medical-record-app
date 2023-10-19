@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Patients</title>
+</head>
+<body>
+    <h1>Patients</h1>
+    <ul id="patient-list"></ul>
+    <script>
+        async function fetchPatients() {
+            try {
+                const response = await fetch('/api/patient');
+                if (response.ok) {
+                    const patients = await response.json();
+
+                    const patientList = document.getElementById('patient-list');
+                    patientList.innerHTML = '';
+
+                    patients.forEach((patient) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Name: ${patient.First_name} ${patient.Last_name}, Birth Date: ${patient.Birth_date}, Gender: ${patient.Gender}, Phone: ${patient.Phone}, Address: ${patient.address}`;
+                        patientList.appendChild(listItem);
+                    });
+                } else {
+                    console.error('Failed to fetch patients:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        fetchPatients();
+    </script>
+    </body>
+</html>

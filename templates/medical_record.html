@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Medical Records</h1>
+    <ul id="medical-record-list"></ul>
+    <script>
+        async function fetchMedicalRecords() {
+            try {
+                const response = await fetch('/api/medical_record');
+                if (response.ok) {
+                    const medicalRecords = await response.json();
+
+                    const medicalRecordList = document.getElementById('medical-record-list');
+                    medicalRecordList.innerHTML = '';
+
+                    medicalRecords.forEach((record) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Date: ${record.visit_date}, Diagnosis: ${record.Diagnosis}, Prescription: ${record.Prescription}`;
+                        medicalRecordList.appendChild(listItem);
+                    });
+                } else {
+                    console.error('Failed to fetch medical records:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        fetchMedicalRecords();
+    </script>
+</body>
+</html>
