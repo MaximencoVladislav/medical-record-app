@@ -1,1 +1,1 @@
-# medical-record-app made in Python
+# Medical Record app made in Python
